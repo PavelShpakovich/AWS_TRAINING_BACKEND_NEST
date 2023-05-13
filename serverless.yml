@@ -1,0 +1,26 @@
+service: cart-service
+
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-east-1
+
+environment:
+  DATABASE_HOST: ${env:DATABASE_HOST}
+  DATABASE_PORT: ${env:DATABASE_PORT}
+  DATABASE_USERNAME: ${env:DATABASE_USERNAME}
+  DATABASE_NAME: ${env:DATABASE_NAME}
+  DATABASE_PASSWORD: ${env:DATABASE_PASSWORD}
+
+functions:
+  main:
+    handler: dist/main.handler
+    events:
+      - http:
+          method: ANY
+          path: /
+      - http:
+          method: ANY
+          path: '{proxy+}'
